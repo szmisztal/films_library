@@ -5,8 +5,13 @@ class Films():
         self.genre = genre
         self.number_of_plays = number_of_plays
 
+        self.current_plays = 0
+
     def __str__(self):
         return f"{self.title}, {self.publication_date}, {self.genre}, {self.number_of_plays}"
+    
+    def play(self, step = 1):
+        self.current_plays += step
 
 class TVSeries(Films):
     def __init__(self, episode_number, season_number, *args, **kwargs):
