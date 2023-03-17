@@ -7,11 +7,11 @@ class Films():
 
         self.current_plays = 0
 
-    def __str__(self):
-        return f"{self.title}, {self.publication_date}, {self.genre}, {self.number_of_plays}"
-    
     def play(self, step = 1):
         self.current_plays += step
+
+    def __str__(self):
+        return f"{self.title}, ({self.publication_date})"
 
 class TVSeries(Films):
     def __init__(self, episode_number, season_number, *args, **kwargs):
@@ -20,4 +20,6 @@ class TVSeries(Films):
         self.season_number = season_number
     
     def __str__(self):
-        return super(). __str__ + f"{self.episode_number}, {self.season_number}"
+        season = str(self.season_number).zfill(2)
+        episode = str(self.episode_number).zfill(2)
+        return f"{self.title} S{season}E{episode}"
