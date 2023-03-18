@@ -23,3 +23,22 @@ class TVSeries(Films):
         season = str(self.season_number).zfill(2)
         episode = str(self.episode_number).zfill(2)
         return f"{self.title} S{season}E{episode}"
+
+class Library():
+    def __init__(self):
+        self.titles = []
+
+    def add_title(self, title):
+        self.titles.append(title)
+
+    def get_movies(self):
+        movies = []
+        movies.extend[(title for title in self.titles if isinstance(title, Films))]
+        sorted_movies = sorted(movies)
+        return sorted_movies
+    
+    def get_series(self):
+        series = []
+        series.extend([title for title in self.titles if isinstance(title, TVSeries)])
+        sorted_series = sorted(series)
+        return sorted_series
