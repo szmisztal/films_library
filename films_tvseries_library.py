@@ -1,3 +1,5 @@
+import random
+
 class Films():
     def __init__(self, title, publication_date, genre):
         self.title = title
@@ -52,6 +54,19 @@ class Library():
         series.extend([title for title in self.titles if isinstance(title, TVSeries)])
         sorted_series = sorted(series, key = lambda serie: serie.title)
         return sorted_series
+    
+    def search(self, title):
+        search_title = [title for titles in self.titles if title == titles.title]
+        if bool(search_title) == True:
+            print(f"Here you are: {search_title}")
+        else:
+            print("Nothing to do here.")
+
+    def generate_views(self, amount):
+        for title in range(amount):
+            title = (random.choice(self.titles))
+            title_plays = (random.choice(range(1, 100)))
+            print(f"{title} - current plays = {title_plays}")
 
 pulp_fiction = Films("Pulp Fiction", 1994, "Criminal")
 the_walking_dead = TVSeries("The Walking Dead", 2010, "Horror")
@@ -75,6 +90,11 @@ for movie in sorted_movies:
 sorted_series = library.get_series()
 for serie in sorted_series:
     print(serie)
+
+library.search("Django")
+library.search("Kapitan Bomba")
+library.generate_views(10)
+
 
 
 
