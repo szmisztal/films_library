@@ -60,13 +60,21 @@ class Library():
         if bool(search_title) == True:
             print(f"Here you are: {search_title}")
         else:
-            print("Nothing to do here.")
+            print("Nothing`s here.")
 
     def generate_views(self, amount):
+        self.number_of_plays = []
         for title in range(amount):
             title = (random.choice(self.titles))
-            title_plays = (random.choice(range(1, 100)))
-            print(f"{title} - current plays = {title_plays}")
+            title.current_plays = (random.choice(range(1, 100)))
+            if title not in self.number_of_plays:
+                self.number_of_plays.append(title)
+            else:
+                continue
+
+    def top_titles(self):
+        self.top_list = sorted(self.titles, key = lambda title: title.current_plays)
+        return self.top_list
 
 pulp_fiction = Films("Pulp Fiction", 1994, "Criminal")
 the_walking_dead = TVSeries("The Walking Dead", 2010, "Horror")
@@ -74,6 +82,10 @@ django = Films("Django", 2012, "Western")
 breaking_bad = TVSeries("Breaking Bad", 2008, "Crime Drama")
 the_hateful_eight = Films("The Hateful Eight", 2015, "Western")
 the_last_of_us = TVSeries("The Last of Us", 2023, "Post Apo")
+inglourious_basterds = Films("Inglourious Basterds", 2009, "War Film")
+kapitan_bomba = TVSeries("Kapitan Bomba", 2007, "Comedy")
+alien = Films("Alien", 1979, "Horror")
+chernobyl = TVSeries("Chernobyl", 2019, "Drama")
 
 library = Library()
 library.add_title(pulp_fiction)
@@ -82,6 +94,10 @@ library.add_title(django)
 library.add_title(breaking_bad)
 library.add_title(the_hateful_eight)
 library.add_title(the_last_of_us)
+library.add_title(inglourious_basterds)
+library.add_title(kapitan_bomba)
+library.add_title(alien)
+library.add_title(chernobyl)
 
 sorted_movies = library.get_movies()
 for movie in sorted_movies:
@@ -92,8 +108,17 @@ for serie in sorted_series:
     print(serie)
 
 library.search("Django")
-library.search("Kapitan Bomba")
-library.generate_views(10)
+library.search("Titanic")
+library.generate_views(50)
+print(django.current_plays)
+
+plays_list = library.number_of_plays
+for title in plays_list:
+    print(f"{title.title} current plays = {title.current_plays}")
+
+top_plays = library.top_titles()
+
+
 
 
 
