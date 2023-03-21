@@ -10,7 +10,7 @@ class Films():
         self.current_plays += step
 
     def __str__(self):
-        return f"{self.title}, ({self.publication_date})"
+        return f"{self.title} ({self.publication_date})"
 
 class TVSeries():
     def __init__(self, title, publication_date, genre):
@@ -44,20 +44,21 @@ class Library():
     def get_movies(self):
         movies = []
         movies.extend([title for title in self.titles if isinstance(title, Films)])
-        return print(movies)
+        sorted_movies = sorted(movies, key = lambda movie: movie.title)
+        return sorted_movies
     
     def get_series(self):
         series = []
         series.extend([title for title in self.titles if isinstance(title, TVSeries)])
-        return print(series)
+        sorted_series = sorted(series, key = lambda serie: serie.title)
+        return sorted_series
 
 pulp_fiction = Films("Pulp Fiction", 1994, "Criminal")
 the_walking_dead = TVSeries("The Walking Dead", 2010, "Horror")
 django = Films("Django", 2012, "Western")
 breaking_bad = TVSeries("Breaking Bad", 2008, "Crime Drama")
 the_hateful_eight = Films("The Hateful Eight", 2015, "Western")
-print(the_hateful_eight)
-print(the_walking_dead)
+the_last_of_us = TVSeries("The Last of Us", 2023, "Post Apo")
 
 library = Library()
 library.add_title(pulp_fiction)
@@ -65,9 +66,15 @@ library.add_title(the_walking_dead)
 library.add_title(django)
 library.add_title(breaking_bad)
 library.add_title(the_hateful_eight)
-print(library.titles)
-library.get_movies()
-library.get_series()
+library.add_title(the_last_of_us)
+
+sorted_movies = library.get_movies()
+for movie in sorted_movies:
+    print(movie)
+
+sorted_series = library.get_series()
+for serie in sorted_series:
+    print(serie)
 
 
 
