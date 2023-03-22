@@ -16,8 +16,8 @@ class Films():
         return f"{self.title} ({self.publication_date})"
 
 class TVSeries(Films):
-    def __init__(self, season_number, episode_number, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, title, publication_date, genre, season_number, episode_number):
+        super().__init__(title, publication_date, genre)
         self.season_number = season_number
         self.episode_number = episode_number
 
@@ -68,15 +68,15 @@ class Library():
         return self.top_list[:amount]
 
 pulp_fiction = Films("Pulp Fiction", 1994, "Criminal")
-the_walking_dead = TVSeries(1, 1, "The Walking Dead", 2010, "Horror")
+the_walking_dead = TVSeries("The Walking Dead", 2010, "Horror", 1, 1)
 django = Films("Django", 2012, "Western")
-breaking_bad = TVSeries(1, 1, "Breaking Bad", 2008, "Crime Drama")
+breaking_bad = TVSeries("Breaking Bad", 2008, "Crime Drama", 1, 1)
 the_hateful_eight = Films("The Hateful Eight", 2015, "Western")
-the_last_of_us = TVSeries(1, 1, "The Last of Us", 2023, "Post Apo")
+the_last_of_us = TVSeries("The Last of Us", 2023, "Post Apo", 1, 1)
 inglourious_basterds = Films("Inglourious Basterds", 2009, "War Film")
-kapitan_bomba = TVSeries(1, 1, "Kapitan Bomba", 2007, "Comedy")
+kapitan_bomba = TVSeries("Kapitan Bomba", 2007, "Comedy", 1, 1)
 alien = Films("Alien", 1979, "Horror")
-chernobyl = TVSeries(1, 1, "Chernobyl", 2019, "Drama")
+chernobyl = TVSeries("Chernobyl", 2019, "Drama", 1, 1)
 
 print("MOVIES AND SERIES LIBRARY.")
 
