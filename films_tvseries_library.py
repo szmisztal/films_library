@@ -63,18 +63,19 @@ class Library():
             print("Nothing`s here.")
 
     def generate_views(self, amount):
-        self.number_of_plays = []
-        for title in range(amount):
-            title = (random.choice(self.titles))
-            title.current_plays = (random.choice(range(1, 100)))
-            if title not in self.number_of_plays:
-                self.number_of_plays.append(title)
-            else:
-                continue
+        self.number_of_plays = random.sample(self.titles, amount)
+        for title in self.number_of_plays:
+            title.play(random.choice(range(1, 100)))
 
-    def top_titles(self):
-        self.top_list = sorted(self.titles, key = lambda title: title.current_plays)
-        return self.top_list
+    def top_titles(self, amount, content_type = None):
+        if content_type == 'movies':
+            content = self.get_movies()
+        elif content_type == 'series':
+            content = self.get_series()
+        else:
+            content = self.titles
+        self.top_list = sorted(content, key = lambda title: title.current_plays, reverse = True)
+        return self.top_list[:amount]
 
 pulp_fiction = Films("Pulp Fiction", 1994, "Criminal")
 the_walking_dead = TVSeries("The Walking Dead", 2010, "Horror")
@@ -109,14 +110,32 @@ for serie in sorted_series:
 
 library.search("Django")
 library.search("Titanic")
-library.generate_views(50)
+library.generate_views(10)
 print(django.current_plays)
 
 plays_list = library.number_of_plays
 for title in plays_list:
     print(f"{title.title} current plays = {title.current_plays}")
 
-top_plays = library.top_titles()
+top_of_all = library.top_titles(3)
+top_of_all_list = []
+for title in top_of_all:
+    top_of_all_list.append(title.title)
+print("The most popular titles are: " + ', '.join(top_of_all_list),'.')
+
+top_movies = library.top_titles(3, 'movies')
+top_movies_list = []
+for title in top_movies:
+    top_movies_list.append(title.title)
+print("The most popular movies are: " + ', '.join(top_movies_list),'.')
+
+top_series = library.top_titles(3, 'series')
+top_series_list = []
+for title in top_series:
+    top_series_list.append(title.title)
+print(f"The most popular series are: " + ', '.join(top_series_list),'.')
+
+
 
 
 
