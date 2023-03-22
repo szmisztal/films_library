@@ -1,4 +1,5 @@
 import random
+from datetime import date
 
 class Films():
     def __init__(self, title, publication_date, genre):
@@ -25,11 +26,12 @@ class TVSeries():
         self.season_number = 1
 
     def play(self, step = 1):
+        self.episode_number = (self.current_plays + step) % 15
+        self.season_number = (self.current_plays + step) // 15 + 1
+        if self.episode_number == 0:
+            self.episode_number = 15
+            self.season_number -= 1
         self.current_plays += step
-        self.episode_number += step
-        if self.episode_number == 13:
-            self.episode_number = 1
-            self.season_number += step
 
     def __str__(self):
         season = str(self.season_number).zfill(2)
@@ -88,6 +90,8 @@ kapitan_bomba = TVSeries("Kapitan Bomba", 2007, "Comedy")
 alien = Films("Alien", 1979, "Horror")
 chernobyl = TVSeries("Chernobyl", 2019, "Drama")
 
+print("MOVIES AND SERIES LIBRARY.")
+
 library = Library()
 library.add_title(pulp_fiction)
 library.add_title(the_walking_dead)
@@ -100,41 +104,28 @@ library.add_title(kapitan_bomba)
 library.add_title(alien)
 library.add_title(chernobyl)
 
-sorted_movies = library.get_movies()
-for movie in sorted_movies:
-    print(movie)
-
-sorted_series = library.get_series()
-for serie in sorted_series:
-    print(serie)
-
-library.search("Django")
-library.search("Titanic")
 library.generate_views(10)
-print(django.current_plays)
 
-plays_list = library.number_of_plays
-for title in plays_list:
-    print(f"{title.title} current plays = {title.current_plays}")
+today = date.today()
+dd_mm_yyyy = today.strftime("%d/%m/%Y")
 
 top_of_all = library.top_titles(3)
 top_of_all_list = []
 for title in top_of_all:
     top_of_all_list.append(title.title)
-print("The most popular titles are: " + ', '.join(top_of_all_list),'.')
+print("The most popular titles today", dd_mm_yyyy, "are: " + ', '.join(top_of_all_list),'.')
 
 top_movies = library.top_titles(3, 'movies')
 top_movies_list = []
 for title in top_movies:
     top_movies_list.append(title.title)
-print("The most popular movies are: " + ', '.join(top_movies_list),'.')
+print("The most popular movies today", dd_mm_yyyy, "are: " + ', '.join(top_movies_list),'.')
 
 top_series = library.top_titles(3, 'series')
 top_series_list = []
 for title in top_series:
     top_series_list.append(title.title)
-print(f"The most popular series are: " + ', '.join(top_series_list),'.')
-
+print(f"The most popular series today", dd_mm_yyyy, "are: " + ', '.join(top_series_list),'.')
 
 
 
