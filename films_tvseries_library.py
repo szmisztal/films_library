@@ -15,23 +15,11 @@ class Films():
     def __str__(self):
         return f"{self.title} ({self.publication_date})"
 
-class TVSeries():
-    def __init__(self, title, publication_date, genre):
-        self.title = title
-        self.publication_date = publication_date
-        self.genre = genre
-
-        self.current_plays = 0
-        self.episode_number = 1
-        self.season_number = 1
-
-    def play(self, step = 1):
-        self.episode_number = (self.current_plays + step) % 15
-        self.season_number = (self.current_plays + step) // 15 + 1
-        if self.episode_number == 0:
-            self.episode_number = 15
-            self.season_number -= 1
-        self.current_plays += step
+class TVSeries(Films):
+    def __init__(self, season_number, episode_number, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.season_number = season_number
+        self.episode_number = episode_number
 
     def __str__(self):
         season = str(self.season_number).zfill(2)
@@ -47,7 +35,7 @@ class Library():
 
     def get_movies(self):
         movies = []
-        movies.extend([title for title in self.titles if isinstance(title, Films)])
+        movies.extend([title for title in self.titles if not isinstance(title, TVSeries)])
         sorted_movies = sorted(movies, key = lambda movie: movie.title)
         return sorted_movies
     
@@ -80,15 +68,15 @@ class Library():
         return self.top_list[:amount]
 
 pulp_fiction = Films("Pulp Fiction", 1994, "Criminal")
-the_walking_dead = TVSeries("The Walking Dead", 2010, "Horror")
+the_walking_dead = TVSeries(1, 1, "The Walking Dead", 2010, "Horror")
 django = Films("Django", 2012, "Western")
-breaking_bad = TVSeries("Breaking Bad", 2008, "Crime Drama")
+breaking_bad = TVSeries(1, 1, "Breaking Bad", 2008, "Crime Drama")
 the_hateful_eight = Films("The Hateful Eight", 2015, "Western")
-the_last_of_us = TVSeries("The Last of Us", 2023, "Post Apo")
+the_last_of_us = TVSeries(1, 1, "The Last of Us", 2023, "Post Apo")
 inglourious_basterds = Films("Inglourious Basterds", 2009, "War Film")
-kapitan_bomba = TVSeries("Kapitan Bomba", 2007, "Comedy")
+kapitan_bomba = TVSeries(1, 1, "Kapitan Bomba", 2007, "Comedy")
 alien = Films("Alien", 1979, "Horror")
-chernobyl = TVSeries("Chernobyl", 2019, "Drama")
+chernobyl = TVSeries(1, 1, "Chernobyl", 2019, "Drama")
 
 print("MOVIES AND SERIES LIBRARY.")
 
@@ -126,10 +114,6 @@ top_series_list = []
 for title in top_series:
     top_series_list.append(title.title)
 print(f"The most popular series today", dd_mm_yyyy, "are: " + ', '.join(top_series_list),'.')
-
-
-
-
 
 
 
